@@ -30,7 +30,7 @@ Nous avons donc décidé de faire un jeu de plateforme assez simple avec des cha
 * Maud et Cindy: Les sprites et le level design
 
 ### Les difficultés
-La grosse difficulté a été de développer sur un framework que nous ne connaissions pas. Il nous a fallu apprendre sur le tas et faire face à de nombreux problèmes très difficiles à résoudre en très peu de temps. Notamment le Netcode qui à été très difficile à mettre en place.
+La grosse difficulté a été de développer sur un framework que nous ne connaissions pas. Il nous a fallu apprendre sur le tas et faire face à de nombreux problèmes très difficiles à résoudre en très peu de temps. Notamment le Netcode qui a été très difficile à mettre en place.
 
 Nous avons heureusement réussi a présenter un jeu fonctionnel à l'issue de la semaine.
 
