@@ -6,7 +6,7 @@
 * Formation: BeCode
 * Du 9 août au 23 août
 * Javascript (Phaser)
-* Lien de la version jouable: [cataclysm.tk](https://cataclysm.tk/)
+* Lien de la version jouable: [cataclysm](https://cataclysm.netlify.app/)
 
 ## Description du projet
 Les coach de BeCode ont organisés un genre de "GameJam" interne, où les apprenants forment des groupes de 5 personnes pour développer un jeu en une semaine.
