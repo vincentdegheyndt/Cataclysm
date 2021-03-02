@@ -13,14 +13,15 @@
 * Lien de la version jouable: [cataclysm](https://cataclysm.netlify.app/)
 
 ## Description du projet
-Les coach de BeCode ont organisés un genre de "GameJam" interne, où les apprenants forment des groupes de 5 personnes pour développer un jeu en une semaine.
+Les coachs de BeCode ont organisé une "GameJam" interne : chaque groupe de 5 personnes doit développer un jeu en une semaine.
 
-On pouvait développer ce qu'on voulait, la seule contraite est que le jeu doit être jouable en ligne avec plusieurs personnes.
+La seule contraite est que le jeu doit être jouable en ligne avec plusieurs personnes.
+Mis à part ça, tous les types de jeux étaient possibles.
 
 ## Le développement
 
 ### L'idée générale du jeu
-Avant de commencer, on s'est rassemblé autour d'une table pour savoir ce qu'on allais faire. On a donc décidé de faire un jeu de plateforme assez simple, avec des chats, ou le but serais d'atteindre la fin du niveau en premier en évitant des pièges vicieusement caché avec des bonus et malus sur le terrain.
+Nous avons donc décidé de faire un jeu de plateforme assez simple avec des chats comme personnages jouables. Le but est d'atteindre la fin du niveau en premier tout en évitant des pièges vicieusement cachés et à l'aide de bonus et malus dispersés sur le terrain.
 
 ### Les rôles de l'équipe
 * Joshua: l'architecture du jeu et du Netcode.
@@ -29,13 +30,12 @@ Avant de commencer, on s'est rassemblé autour d'une table pour savoir ce qu'on 
 * Maud et Cindy: Les sprites et le level design
 
 ### Les difficultés
-La grosse difficulté est de développer sur un framework qu'on ne connait pas. Il nous a fallu apprendre sur le tas et on a du faire face à de nombreux problèmes qu'on a eu très dificile à résoudre. On a tout juste réussi a présenter un jeu fonctionnel.
+La grosse difficulté a été de développer sur un framework que nous ne connaissions pas. Il nous a fallu apprendre sur le tas et faire face à de nombreux problèmes très difficiles à résoudre en très peu de temps. Notamment le Netcode qui à été très difficile à mettre en place.
 
-Une autre difficulté aussi est le Netcode qui à été très difficile à mettre en place.
-
-Et il y a  aussi le problème de la puissance de certaines de nos machines qui étaient insufissants pour la charge de travail qu'on à du faire.
+Nous avons heureusement réussi a présenter un jeu fonctionnel à l'issue de la semaine.
 
 ## Conclusion
-C'était à la fois très intéressant et très compliqué de travailler sur ce projet. Le fait de devoir apprendre pour rendre un projet en une semaine.
+Ce projet fût à la fois très intéressant et très compliqué car il ne s'agissait pas seulement de code mais également de game design.
 
-On est gagnant à égalité avec un autre groupe, ça à été une bonne expérience pour nous tous.
+Nous avons remporté le concours à égalité avec un autre groupe. 
+Ce projet à été une très bonne expérience pour nous tous.
