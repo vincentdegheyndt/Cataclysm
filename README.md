@@ -4,7 +4,7 @@
 
 * Projet de groupe avec [Frédérick Van Isschot](https://github.com/Fred-Vaniss), [Joshua Fouyon](https://github.com/fouyonjoshua), [Vincent De Gheyndt](https://github.com/vincentdegheyndt), [Maud Barbier](https://github.com/maudbecode) et [Cindy Buchet](https://github.com/Cindy-Buchet)
 * Formation: BeCode
-* Du 9 août au 23 août
+* Du 9 août au 23 août 2019
 * Javascript (Phaser)
 * Lien de la version jouable: [cataclysm](https://cataclysm.netlify.app/)
 
