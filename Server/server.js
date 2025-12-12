@@ -1,5 +1,10 @@
 const _ = require('lodash');
-const Server = require('socket.io')();
+const Server = require('socket.io')({
+    cors: {
+        origin: ["http://localhost:1234", "http://localhost:8080"],
+        methods: ["GET", "POST"]
+    }
+});
 
 const players = []; // All connected players was registered here
 

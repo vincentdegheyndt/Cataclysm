@@ -21,10 +21,10 @@ export default class Loading extends Scene {
         this.load.audio('effect:twang', 'audios/effects/twang.mp3');
 
         // Load tilemap assets..
-        this.load.tilemapTiledJSON('maps', 'map.json');
+        this.load.tilemapTiledJSON('maps', '../assets/map.json');
         
         // Load spritesheet assets..
-        this.load.spritesheet('tiles', 'images/tiles.png', { frameWidth: 70, frameHeight: 70});
+        this.load.spritesheet('tiles', '../assets/images/tiles.png', { frameWidth: 70, frameHeight: 70});
         this.load.spritesheet('plateformes', 'images/plateformes.png', {frameWidth: 70, frameHeight: 70});
         this.load.spritesheet('sea', 'images/sea.png', { frameWidth: 70, frameHeight: 70});
         this.load.spritesheet('spikeTrap', 'images/spikesTrap.png', { frameWidth: 70, frameHeight: 70});

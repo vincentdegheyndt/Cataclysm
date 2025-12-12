@@ -10,8 +10,8 @@ export default class Menu extends Scene {
     }
 
     preload() {
-        this.load.image('title', 'images/title.png');
-        this.load.image('titleCat', 'images/titleCat.png');
+        this.load.image('title', '../assets/images/title.png');
+        this.load.image('titleCat', '../assets/images/titleCat.png');
     }
 
     getCenterX() {
