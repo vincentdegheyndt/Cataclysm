@@ -10,8 +10,7 @@ export default class Menu extends Scene {
     }
 
     preload() {
-        this.load.image('title', '../assets/images/title.png');
-        this.load.image('titleCat', '../assets/images/titleCat.png');
+        this.load.image('title', 'images/title.png');
     }
 
     getCenterX() {
@@ -36,8 +35,8 @@ export default class Menu extends Scene {
 
     create() {
         this.add.image(this.getCenterX(), 300, 'title');
-        this.cameras.main.setBackgroundColor('#ccccff'); 
-        this.playButton = this.add.text(this.getCenterX()-50, this.getCenterY()*1.5, 'Play', {   
+        this.cameras.main.setBackgroundColor('#ccccff');
+        this.playButton = this.add.text(this.getCenterX()-50, this.getCenterY()*1.5, 'Play', {
             fill: '#000',
             font: "70px Arial",
             align: "center"

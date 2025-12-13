@@ -17,11 +17,13 @@ export default class Main extends Scene {
         this.message = null;
         this.tramp = {};
         this.debug = null;
+        this.debugEnabled = false;
         this.audios = { music: {}, effect: {} };
         this.effects = { fear: false, speed: false, slow: false, fly:false, onPlatform: false };
         this.cursors = this.input.keyboard.createCursorKeys();
         this.spawnCoords = { x: 160, y: 4909 };
         this.finish = null;
+        this.respawnTimer = null;
 
         this.server = Server(process.env.SERVER_URL || `${location.hostname}:9208`);
         this.players = {};
@@ -35,16 +37,16 @@ export default class Main extends Scene {
 
         // Tiles and original layer
         this.tiles.tiles = this.maps.addTilesetImage('tiles');
-        this.layers.tiles = this.maps.createDynamicLayer('World', this.tiles.tiles, 0, 0);
+        this.layers.tiles = this.maps.createLayer('World', this.tiles.tiles, 0, 0);
         this.layers.tiles.setCollisionByExclusion([-1]); // The player will collide with this layer
-        
+
         // Tiles and layer of the sea
         this.tiles.sea = this.maps.addTilesetImage('sea');
-        this.layers.sea = this.maps.createDynamicLayer('Sea', this.tiles.sea, 0, 0);
-        
+        this.layers.sea = this.maps.createLayer('Sea', this.tiles.sea, 0, 0);
+
         // Tiles and layer platforms
-        this.tiles.platform = this.maps.addTilesetImage('plateformes'); 
-        this.layers.platform = this.maps.createDynamicLayer('Plateformes', this.tiles.platform, 0, 0);
+        this.tiles.platform = this.maps.addTilesetImage('plateformes');
+        this.layers.platform = this.maps.createLayer('Plateformes', this.tiles.platform, 0, 0);
         this.layers.platform.setCollisionByExclusion([-1]); // The player will collide with this layer
 
         // Set the boundaries of our world
@@ -106,35 +108,35 @@ export default class Main extends Scene {
     createBonus() {
         // Fish
         this.tiles.fishTiles = this.maps.addTilesetImage('fish');
-        this.layers.fishLayer = this.maps.createDynamicLayer('Fish', this.tiles.fishTiles, 0, 0);
-    
+        this.layers.fishLayer = this.maps.createLayer('Fish', this.tiles.fishTiles, 0, 0);
+
         this.layers.fishLayer.setTileIndexCallback(27, this.collectFish, this);
         this.physics.add.overlap(this.player, this.layers.fishLayer);
 
         // Chocolate
         this.tiles.chocoTiles = this.maps.addTilesetImage('choco');
-        this.layers.chocoLayer = this.maps.createDynamicLayer('Choco', this.tiles.chocoTiles, 0, 0);
+        this.layers.chocoLayer = this.maps.createLayer('Choco', this.tiles.chocoTiles, 0, 0);
 
         this.layers.chocoLayer.setTileIndexCallback(28, this.collectChoco, this);
         this.physics.add.overlap(this.player, this.layers.chocoLayer);
 
         // Cucumber
         this.tiles.cucumTiles = this.maps.addTilesetImage('cucumber');
-        this.layers.cucumLayer = this.maps.createDynamicLayer('Cucumber', this.tiles.cucumTiles, 0, 0);
+        this.layers.cucumLayer = this.maps.createLayer('Cucumber', this.tiles.cucumTiles, 0, 0);
 
         this.layers.cucumLayer.setTileIndexCallback(29, this.collectCucum, this);
         this.physics.add.overlap(this.player, this.layers.cucumLayer);
 
         // Bird
         this.tiles.birdTiles = this.maps.addTilesetImage('bird');
-        this.layers.birdLayer = this.maps.createDynamicLayer('Bird', this.tiles.birdTiles, 0, 0);
+        this.layers.birdLayer = this.maps.createLayer('Bird', this.tiles.birdTiles, 0, 0);
 
         this.layers.birdLayer.setTileIndexCallback(30, this.collectBird, this);
         this.physics.add.overlap(this.player, this.layers.birdLayer);
 
         // Trampoline
         this.tiles.trampTiles = this.maps.addTilesetImage('trampoline');
-        this.layers.trampLayer = this.maps.createDynamicLayer('Tramp', this.tiles.trampTiles, 0, 0);
+        this.layers.trampLayer = this.maps.createLayer('Tramp', this.tiles.trampTiles, 0, 0);
 
         this.layers.trampLayer.setTileIndexCallback(38, this.TrampoJump, this);
         this.physics.add.overlap(this.player, this.layers.trampLayer);
@@ -251,24 +253,15 @@ export default class Main extends Scene {
             const moveY = cloudObject.properties.find(obj => obj.name == 'moveY').value;
 
             // Animate the cloud
-            this.tweens.timeline({
+            this.tweens.add({
                 targets: cloud.body.velocity,
-                loop: -1,
-                tweens: [
-                    {   
-                        x: moveX,
-                        y: moveY,
-                        duration: 1000, 
-                        ease: 'Stepped' 
-                    },
-                    {   
-                        x: -Math.abs(moveX), 
-                        y: -Math.abs(moveY), 
-                        duration: 1000, 
-                        ease: 'Stepped' 
-                    }
-                ]
-            })
+                x: { from: moveX, to: -Math.abs(moveX) },
+                y: { from: moveY, to: -Math.abs(moveY) },
+                duration: 2000,
+                ease: 'Stepped',
+                yoyo: true,
+                repeat: -1
+            });
         });
         this.physics.add.collider(this.player, this.clouds.cloud, this.landOnCloud, null, this);
     }
@@ -323,7 +316,9 @@ export default class Main extends Scene {
         }, 5000)
 
         // Player respawn
-        setTimeout((position = this.spawnCoords) => {
+        this.respawnTimer = setTimeout((position = this.spawnCoords) => {
+            if (!this.player) return; // Guard against scene change
+
             this.cameras.main.startFollow(this.player);
             this.player.alive = true;
 
@@ -349,6 +344,8 @@ export default class Main extends Scene {
             this.physics.add.overlap(this.player, this.layers.cucumLayer);
             this.physics.add.overlap(this.player, this.layers.birdLayer);
             this.physics.add.overlap(this.player, this.layers.trampLayer);
+
+            this.respawnTimer = null;
         }, 2000);
     }
 
@@ -390,7 +387,6 @@ export default class Main extends Scene {
      * @param {Object} tile
      */
     collectCucum(sprite, tile) {
-        let frightened;
         this.layers.cucumLayer.removeTileAt(tile.x, tile.y);
         this.effects.fear = true;
         this.player.body.setVelocityX((Math.random() * 1000) - 500);
@@ -399,7 +395,6 @@ export default class Main extends Scene {
         this.audios.effect.scream.play();
         setTimeout(() => {
             this.effects.fear = false;
-            clearInterval(frightened);
             this.message.setText('');
         }, 1800);
     }
@@ -453,6 +448,9 @@ export default class Main extends Scene {
 
         this.server.on('connect', () => {
             console.log('We are ready to work harder! 💪😎');
+            if (this.message) {
+                this.message.setText('');
+            }
 
             // Request all connected users
             this.server.on('player:all', (players) => {
@@ -466,8 +464,7 @@ export default class Main extends Scene {
             // Handle player spawning
             this.server.on('player:spawn', id => {
                 if (id != this.server.id) this.createNetworkPlayer(id);
-                this.server.emit('player:spawned', id);
-                
+
                 console.log(`${id} was connected 😁`, this.players);
             });
 
@@ -501,15 +498,29 @@ export default class Main extends Scene {
 
             // Handle player unspawn
             this.server.on('player:unspawn', id => {
-                this.players[id].sprite.destroy();
-                this.server.emit('player:unspawned');
-                delete this.players[id];
-
-                console.log(`${id} was disconnected 😞`, this.players);
+                if (this.players[id]) {
+                    this.players[id].sprite.destroy();
+                    delete this.players[id];
+                    console.log(`${id} was disconnected 😞`, this.players);
+                }
             });
 
         });
-        
+
+        this.server.on('connect_error', (error) => {
+            console.error('Connection error:', error);
+            if (this.message) {
+                this.message.setText('Connection error. Retrying...');
+            }
+        });
+
+        this.server.on('disconnect', (reason) => {
+            console.log('Disconnected:', reason);
+            if (this.message) {
+                this.message.setText('Disconnected from server');
+            }
+        });
+
         this.createWorld();
         this.registerAudios();
 
@@ -528,22 +539,58 @@ export default class Main extends Scene {
             fill: '#ffffff'
         }).setScrollFactor(0);
 
-        // Create the debugging
-        if (process.env.NODE_ENV === 'development') {
-            this.debug = this.add.text(20, 20, this.debugging(), {
-                fontSize: '20px',
-                fill: '#ff0',
-                backgroundColor: '#000',
-                padding: { x:10, y:10 }
-            }).setScrollFactor(0);
-        }
+        // Create the debugging text (always create it, but hide by default)
+        this.debug = this.add.text(20, 20, this.debugging(), {
+            fontSize: '20px',
+            fill: '#ff0',
+            backgroundColor: '#000',
+            padding: { x:10, y:10 }
+        }).setScrollFactor(0).setVisible(this.debugEnabled);
+
+        // Add keyboard listener to toggle debug mode with D key
+        this.debugKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.BACKTICK);
+        this.debugKeyPressed = false;
     } 
+
+    /**
+     * This function is called when the scene shuts down.
+     */
+    shutdown() {
+        // Clear any pending respawn timer
+        if (this.respawnTimer) {
+            clearTimeout(this.respawnTimer);
+            this.respawnTimer = null;
+        }
+
+        // Disconnect socket if connected
+        if (this.server && this.server.connected) {
+            this.server.disconnect();
+        }
+    }
 
     /**
      * This function is native to Phaser.io, is used to update the scene.
      */
-    update() {  
-        if (process.env.NODE_ENV === 'development') this.debug.setText(this.debugging());
+    update() {
+        if (Phaser.Input.Keyboard.JustDown(this.debugKey)) {
+            this.debugEnabled = !this.debugEnabled;
+            this.debug.setVisible(this.debugEnabled);
+
+            // Toggle physics debug
+            if (this.debugEnabled) {
+                this.physics.world.debugGraphic = this.add.graphics();
+                this.physics.world.drawDebug = true;
+            } else {
+                this.physics.world.drawDebug = false;
+                if (this.physics.world.debugGraphic) {
+                    this.physics.world.debugGraphic.clear();
+                    this.physics.world.debugGraphic.destroy();
+                    this.physics.world.debugGraphic = null;
+                }
+            }
+        }
+
+        if (this.debugEnabled) this.debug.setText(this.debugging());
 
         let moveSpeed;
         if (this.effects.fear){

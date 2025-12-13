@@ -1,7 +1,8 @@
 const _ = require('lodash');
 const Server = require('socket.io')({
     cors: {
-        origin: ["http://localhost:1234", "http://localhost:8080"],
+		// origin: ["http://localhost:1234", "http://localhost:8080"],
+		origin: true,
         methods: ["GET", "POST"]
     }
 });

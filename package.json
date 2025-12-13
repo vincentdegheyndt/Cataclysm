@@ -15,12 +15,11 @@
     "server:serve": "nodemon Server/server.js"
   },
   "staticFiles": {
-    "staticPath": [
-      "Client/assets"
-    ]
+    "staticPath": "Client/assets"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.12.1",
+    "core-js": "^3.39.0",
+    "regenerator-runtime": "^0.14.1",
     "cors": "^2.8.5",
     "lodash": "^4.17.21",
     "phaser": "^3.90.0",
@@ -31,7 +30,6 @@
     "nodemon": "^3.1.10",
     "npm-run-all": "^4.1.5",
     "parcel": "^2.16.0",
-    "parcel-plugin-static-files-copy": "^2.6.0",
     "parcel-reporter-static-files-copy": "^1.5.3"
   }
 }
