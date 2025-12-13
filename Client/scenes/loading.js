@@ -6,6 +6,10 @@ export default class Loading extends Scene {
         super({ key: 'loading' });
     }
 
+    init(data) {
+        this.playerName = data.playerName || 'Anonymous Cat';
+    }
+
     preload() {
 
         // Load audio assets..
@@ -53,7 +57,7 @@ export default class Loading extends Scene {
 
         // Switch scene when loading is complete..
         this.load.on('complete', () => {
-            this.scene.start('main');
+            this.scene.start('main', { playerName: this.playerName });
         });
     }
 

@@ -11,7 +11,8 @@ class Game extends Phaser.Game {
         super({
             title: "Cataclysm",
             type: Phaser.AUTO,
-            width: window.innerWidth * Math.round(window.devicePixelRatio), height: window.innerHeight * Math.round(window.devicePixelRatio),
+            width: 1600,
+            height: 1200,
             scene: [Menu, Loading, Main],
             disableContextMenu: false,
             enableDebug: false,
@@ -24,7 +25,7 @@ class Game extends Phaser.Game {
                     tileBias: 32 // This fixes the tiles collision issue on high speed.
                 }},
             scale: {
-                mode: Phaser.Scale.WIDTH_CONTROLS_HEIGHT ,
+                mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH
             }
         });
