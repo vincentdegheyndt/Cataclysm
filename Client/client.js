@@ -1,4 +1,5 @@
-import '@babel/polyfill';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import Phaser from 'phaser';
 
 // Loading all scenes..
@@ -10,20 +11,21 @@ class Game extends Phaser.Game {
         super({
             title: "Cataclysm",
             type: Phaser.AUTO,
-            width: window.innerWidth * Math.round(window.devicePixelRatio), height: window.innerHeight * Math.round(window.devicePixelRatio),
+            width: 1600,
+            height: 1200,
             scene: [Menu, Loading, Main],
             disableContextMenu: false,
-            enableDebug: process.env.NODE_ENV === 'development',
+            enableDebug: false,
             input: { keyboard: true, mouse: true, touch: false, gamepad: false },
-            physics: { 
-                default: 'arcade', 
-                arcade: { 
-                    debug: process.env.NODE_ENV === 'development', 
+            physics: {
+                default: 'arcade',
+                arcade: {
+                    debug: false,
                     gravity: { y: 1200 } ,
                     tileBias: 32 // This fixes the tiles collision issue on high speed.
                 }},
             scale: {
-                mode: Phaser.Scale.WIDTH_CONTROLS_HEIGHT ,
+                mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH
             }
         });

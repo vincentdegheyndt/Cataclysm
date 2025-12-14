@@ -6,6 +6,10 @@ export default class Loading extends Scene {
         super({ key: 'loading' });
     }
 
+    init(data) {
+        this.playerName = data.playerName || 'Anonymous Cat';
+    }
+
     preload() {
 
         // Load audio assets..
@@ -21,26 +25,25 @@ export default class Loading extends Scene {
         this.load.audio('effect:twang', 'audios/effects/twang.mp3');
 
         // Load tilemap assets..
-        this.load.tilemapTiledJSON('maps', '../assets/map.json');
-        
+        this.load.tilemapTiledJSON('maps', 'map.json');
+
         // Load spritesheet assets..
-        this.load.spritesheet('tiles', '../assets/images/tiles.png', { frameWidth: 70, frameHeight: 70});
+        this.load.spritesheet('tiles', 'images/tiles.png', { frameWidth: 70, frameHeight: 70});
         this.load.spritesheet('plateformes', 'images/plateformes.png', {frameWidth: 70, frameHeight: 70});
         this.load.spritesheet('sea', 'images/sea.png', { frameWidth: 70, frameHeight: 70});
-        this.load.spritesheet('spikeTrap', 'images/spikesTrap.png', { frameWidth: 70, frameHeight: 70});
-        
+
         // Load images assets
         this.load.image('coin', 'images/coinGold.png');
         this.load.image('fish', 'images/fish.png');
         this.load.image('choco', 'images/choco.png');
         this.load.image('cucumber', 'images/cucumber.png');
-        this.load.image('bird', 'images/bird.png')
-        this.load.image('trampoline', 'images/trampoline.png')
-        this.load.image('spikeTrap', 'images/spikeTrap.png');
+        this.load.image('bird', 'images/bird.png');
+        this.load.image('trampoline', 'images/trampoline.png');
+        this.load.image('spikeTrap', 'images/spikesTrap.png');
         this.load.image('moving', 'images/moving.png');
         this.load.image('cloud', 'images/cloud.png');
         this.load.image('trampos', 'images/trampos.png');
-        this.load.image('food', 'images/croquettes.png')
+        this.load.image('food', 'images/croquettes.png');
     
 
         // Load atlas assets
@@ -54,7 +57,7 @@ export default class Loading extends Scene {
 
         // Switch scene when loading is complete..
         this.load.on('complete', () => {
-            this.scene.start('main');
+            this.scene.start('main', { playerName: this.playerName });
         });
     }
 
