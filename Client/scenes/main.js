@@ -5,7 +5,12 @@ import Server from 'socket.io-client';
 const CONFIG = {
     SERVER_PORT: '9208',
     CAMERA_BG_COLOR: '#ccccff',
-    DEFAULT_SERVER_URL: process.env.SERVER_URL || `${location.hostname}:9208`,
+    // Use environment variable or default to localhost for development
+    // For production, set SERVER_URL in your build environment to your deployed server URL
+    DEFAULT_SERVER_URL: process.env.SERVER_URL ||
+                        (location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+                            ? `${location.hostname}:9208`
+                            : 'https://your-server-url.onrender.com'), // Replace with your actual server URL
 };
 
 // Constants - Spawn and positioning
